@@ -108,6 +108,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         idTextField.delegate = self
         passwordTextField.delegate = self
         
+        loginButton.isEnabled = false
+        
         loginButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
         findIdButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
         findPasswordButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
@@ -169,6 +171,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    private func updateLoginButton() {
+        let isIdEmpty = idTextField.text?.isEmpty ?? true
+        let isPasswordEmpty = passwordTextField.text?.isEmpty ?? true
+        
+        loginButton.isEnabled = !isIdEmpty && !isPasswordEmpty
+        loginButton.backgroundColor = loginButton.isEnabled ? .red : .black
+        loginButton.layer.borderWidth = loginButton.isEnabled ? 0 : 1
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.borderWidth = 1.0
@@ -177,6 +188,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.borderWidth = 0.0
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        updateLoginButton()
     }
     
     // 화면의 다른 버튼을 눌러도 텍스트필드의 border가 비활성화됨
