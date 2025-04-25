@@ -41,6 +41,7 @@ Temporary Items
 
 ## User settings
 xcuserdata/
+*.xcuserstate
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
@@ -133,3 +134,4 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,xcode,swift
 *.xcuserstate
+assignment_week2_TVING/assignment_week2_TVING.xcodeproj/project.xcworkspace/xcuserdata/*
