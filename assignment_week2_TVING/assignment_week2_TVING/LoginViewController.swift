@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -105,6 +105,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setLayout()
+        idTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        loginButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
+        findIdButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
+        findPasswordButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
+        createNicknameButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
     }
     
     private func setLayout() {
@@ -159,6 +166,28 @@ class LoginViewController: UIViewController {
         createNicknameButton.snp.makeConstraints { make in
             make.centerY.equalTo(noAccountLabel.snp.centerY)
             make.trailing.equalToSuperview().offset(-25)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.layer.borderWidth = 1.0
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.darkGray.cgColor
+        textField.layer.borderWidth = 0.0
+    }
+    
+    // 화면의 다른 버튼을 눌러도 텍스트필드의 border가 비활성화됨
+    @objc func dismissKeyboard() {
+        if idTextField.isFirstResponder {
+            idTextField.resignFirstResponder()
+            textFieldDidEndEditing(idTextField)
+        }
+        if passwordTextField.isFirstResponder {
+            passwordTextField.resignFirstResponder()
+            textFieldDidEndEditing(passwordTextField)
         }
     }
 }
