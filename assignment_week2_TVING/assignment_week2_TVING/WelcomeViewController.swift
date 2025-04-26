@@ -63,8 +63,8 @@ class WelcomeViewController : UIViewController {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(67)
-            make.leading.equalToSuperview().offset(77)
-            make.trailing.equalToSuperview().offset(-77)
+            make.leading.equalToSuperview().offset(57)
+            make.trailing.equalToSuperview().offset(-57)
         }
         
         backToMainButton.snp.makeConstraints { make in

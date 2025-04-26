@@ -41,6 +41,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = .darkGray
         textField.font = UIFont.boldSystemFont(ofSize: 15)
         textField.layer.cornerRadius = 3
+        textField.isSecureTextEntry = true
         textField.addPadding(left: 22)
         
         textField.attributedPlaceholder = NSAttributedString(
@@ -48,6 +49,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             attributes: [NSAttributedString.Key.foregroundColor : UIColor.white]
         )
         return textField
+    }()
+    
+    private let passwordToggleButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+        return button
     }()
     
     private let loginButton: UIButton = {
@@ -137,6 +146,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 make.leading.trailing.height.equalTo(idTextField)
             }
             
+            passwordTextField.rightView = passwordToggleButton
+            passwordTextField.rightViewMode = .always
+            passwordToggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+            
             loginButton.snp.makeConstraints { make in
                 make.top.equalTo(passwordTextField.snp.bottom).offset(21)
                 make.leading.trailing.height.equalTo(idTextField)
@@ -215,5 +228,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             passwordTextField.resignFirstResponder()
             textFieldDidEndEditing(passwordTextField)
         }
+    }
+    
+    @objc private func togglePasswordVisibility() {
+        passwordTextField.isSecureTextEntry.toggle()
+        
+        let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye.fill"
+        passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
 }
