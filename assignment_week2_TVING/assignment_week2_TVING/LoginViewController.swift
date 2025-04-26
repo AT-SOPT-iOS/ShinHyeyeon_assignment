@@ -58,6 +58,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 3
         button.layer.borderColor = UIColor.gray.cgColor
         button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(loginButtonDidTapped), for: .touchUpInside)
         return button
     }()
     
@@ -178,6 +179,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.isEnabled = !isIdEmpty && !isPasswordEmpty
         loginButton.backgroundColor = loginButton.isEnabled ? .red : .black
         loginButton.layer.borderWidth = loginButton.isEnabled ? 0 : 1
+    }
+    
+    private func pushToWelcomeVC() {
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.id = idTextField.text
+        self.navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    @objc private func loginButtonDidTapped() {
+        pushToWelcomeVC()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
