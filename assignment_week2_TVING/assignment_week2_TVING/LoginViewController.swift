@@ -59,6 +59,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    private let passwordClearButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "x.circle"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(clearTextFields), for: .touchUpInside)
+        return button
+    }()
+    
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("로그인하기", for: .normal)
@@ -115,9 +123,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .black
         setLayout()
+        
         idTextField.delegate = self
         passwordTextField.delegate = self
-        
         loginButton.isEnabled = false
         
         loginButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
@@ -146,9 +154,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 make.leading.trailing.height.equalTo(idTextField)
             }
             
-            passwordTextField.rightView = passwordToggleButton
+            // 두 개의 버튼을 담는 컨테이너
+            let rightContainerView = UIView()
+            rightContainerView.isUserInteractionEnabled = true
+            rightContainerView.addSubview(passwordClearButton)
+            rightContainerView.addSubview(passwordToggleButton)
+            
+            passwordToggleButton.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.trailing.equalToSuperview().offset(-20)
+                make.width.height.equalTo(24)
+            }
+
+            passwordClearButton.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.trailing.equalTo(passwordToggleButton.snp.leading).offset(-16)
+                make.width.height.equalTo(24)
+            }
+            
+            rightContainerView.snp.makeConstraints { make in
+                make.width.equalTo(80)
+                make.height.equalTo(40)
+            }
+            
+            passwordTextField.rightView = rightContainerView
             passwordTextField.rightViewMode = .always
-            passwordToggleButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
             
             loginButton.snp.makeConstraints { make in
                 make.top.equalTo(passwordTextField.snp.bottom).offset(21)
@@ -208,7 +238,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.borderWidth = 1.0
     }
-
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.darkGray.cgColor
         textField.layer.borderWidth = 0.0
@@ -236,4 +266,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye.fill"
         passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
+    
+    @objc private func clearTextFields() {
+        idTextField.text = ""
+        passwordTextField.text = ""
+    }
+    
 }
