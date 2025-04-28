@@ -25,7 +25,7 @@ class WelcomeViewController : UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = .boldSystemFont(ofSize: 23)
         return label
     }()
     
@@ -56,20 +56,19 @@ class WelcomeViewController : UIViewController {
         }
         
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-50)
-            make.leading.equalToSuperview().offset(0)
-            make.trailing.equalToSuperview().offset(0)
+            make.top.equalToSuperview().offset(58)
             make.height.equalTo(211)
+            make.width.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(67)
-            make.leading.equalToSuperview().offset(57)
-            make.trailing.equalToSuperview().offset(-57)
+            make.leading.equalToSuperview().offset(78)
+            make.trailing.equalToSuperview().offset(-78)
         }
         
         backToMainButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(0)
+            make.bottom.equalToSuperview().offset(-66)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(52)

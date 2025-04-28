@@ -140,50 +140,51 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.centerX.equalToSuperview()
-            
-            idTextField.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(31)
-                make.leading.equalToSuperview().offset(20)
-                make.trailing.equalToSuperview().offset(-20)
-                make.height.equalTo(52)
-            }
-            
-            passwordTextField.snp.makeConstraints { make in
-                make.top.equalTo(idTextField.snp.bottom).offset(7)
-                make.leading.trailing.height.equalTo(idTextField)
-            }
-            
-            // 두 개의 버튼을 담는 컨테이너
-            let rightContainerView = UIView()
-            rightContainerView.isUserInteractionEnabled = true
-            rightContainerView.addSubview(passwordClearButton)
-            rightContainerView.addSubview(passwordToggleButton)
-            
-            passwordToggleButton.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview()
-                make.trailing.equalToSuperview().offset(-20)
-                make.width.height.equalTo(24)
-            }
-            
-            passwordClearButton.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview()
-                make.trailing.equalTo(passwordToggleButton.snp.leading).offset(-16)
-                make.width.height.equalTo(24)
-            }
-            
-            rightContainerView.snp.makeConstraints { make in
-                make.width.equalTo(80)
-                make.height.equalTo(40)
-            }
-            
-            passwordTextField.rightView = rightContainerView
-            passwordTextField.rightViewMode = .always
-            
-            loginButton.snp.makeConstraints { make in
-                make.top.equalTo(passwordTextField.snp.bottom).offset(21)
-                make.leading.trailing.height.equalTo(idTextField)
-            }
+        }
+        
+        idTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(31)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(52)
+        }
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(idTextField.snp.bottom).offset(7)
+            make.leading.trailing.height.equalTo(idTextField)
+        }
+        
+        // 두 개의 버튼을 담는 컨테이너
+        let rightContainerView = UIView()
+        rightContainerView.isUserInteractionEnabled = true
+        rightContainerView.addSubview(passwordClearButton)
+        rightContainerView.addSubview(passwordToggleButton)
+        
+        passwordToggleButton.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-20)
+            make.width.height.equalTo(24)
+        }
+        
+        passwordClearButton.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.trailing.equalTo(passwordToggleButton.snp.leading).offset(-16)
+            make.width.height.equalTo(24)
+        }
+        
+        rightContainerView.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.height.equalTo(40)
+        }
+        
+        passwordTextField.rightView = rightContainerView
+        passwordTextField.rightViewMode = .always
+        
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(21)
+            make.leading.trailing.height.equalTo(idTextField)
         }
         
         findIdButton.snp.makeConstraints { make in
@@ -205,13 +206,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         noAccountLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(23)
+            make.leading.equalToSuperview().offset(51)
             make.top.equalTo(findIdButton.snp.bottom).offset(28)
         }
         
         createNicknameButton.snp.makeConstraints { make in
             make.centerY.equalTo(noAccountLabel.snp.centerY)
-            make.trailing.equalToSuperview().offset(-25)
+            make.trailing.equalToSuperview().offset(-65)
         }
     }
     
