@@ -165,7 +165,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 make.trailing.equalToSuperview().offset(-20)
                 make.width.height.equalTo(24)
             }
-
+            
             passwordClearButton.snp.makeConstraints { make in
                 make.top.bottom.equalToSuperview()
                 make.trailing.equalTo(passwordToggleButton.snp.leading).offset(-16)
@@ -220,7 +220,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let isPasswordEmpty = passwordTextField.text?.isEmpty ?? true
         
         loginButton.isEnabled = !isIdEmpty && !isPasswordEmpty
-        loginButton.backgroundColor = loginButton.isEnabled ? .red : .black
+        loginButton.backgroundColor = loginButton.isEnabled ? UIColor(named:"tving_red") : .black
         loginButton.layer.borderWidth = loginButton.isEnabled ? 0 : 1
     }
     

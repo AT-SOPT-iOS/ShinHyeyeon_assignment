@@ -32,7 +32,8 @@ class WelcomeViewController : UIViewController {
     private let backToMainButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("메인으로", for: .normal)
-        button.backgroundColor = .red
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = UIColor(named:"tving_red")
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 3
         button.addTarget(self, action: #selector(backToLoginButtonDidTap), for: .touchUpInside)
