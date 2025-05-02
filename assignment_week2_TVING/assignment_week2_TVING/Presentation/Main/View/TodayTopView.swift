@@ -8,10 +8,11 @@
 import UIKit
 import SnapKit
 
-class TodayTopViewController: UIViewController {
+class TodayTopView: UIView {
     
     // MARK: - Properties
     private let itemData = TodayTopModel.dummy()
+    
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -25,34 +26,44 @@ class TodayTopViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .black
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.backgroundColor = .black
         
         setLayout()
         setDelegate()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Layout
     private func setLayout() {
-        view.addSubview(collectionView)
+        addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(9)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(200)
         }
     }
+                   
     
 // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
+    private func setCollectionView() {
+        collectionView.register(TodayTopViewCell.self, forCellWithReuseIdentifier: TodayTopViewCell.identifier)
+    }
 }
 
 // MARK: - UICollectionView Delegate & DataSource
-extension TodayTopViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension TodayTopView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemData.count

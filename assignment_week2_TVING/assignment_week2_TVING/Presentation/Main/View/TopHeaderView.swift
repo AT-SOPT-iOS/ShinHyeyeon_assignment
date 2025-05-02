@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+// UIView로 변경하기
 class TopHeaderView: UIViewController {
     
     private let titleImageView: UIImageView = {
@@ -54,7 +55,7 @@ class TopHeaderView: UIViewController {
         }
         
         searchButton.snp.makeConstraints { make in
-            make.width.height.equalTo(30)
+            make.size.equalTo(30)
         }
 
         smallLogoImageView.snp.makeConstraints { make in
