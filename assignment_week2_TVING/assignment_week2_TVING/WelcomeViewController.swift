@@ -45,7 +45,6 @@ class WelcomeViewController : UIViewController {
         view.backgroundColor = .black
         setLayout()
         bindID()
-        updateTitleLabel()
         
         navigationItem.hidesBackButton = true
     }
@@ -72,14 +71,6 @@ class WelcomeViewController : UIViewController {
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(52)
-        }
-    }
-    
-    private func updateTitleLabel() {
-        if let id = self.id {
-            titleLabel.text = "\(id) 님\n반가워요!"
-        } else {
-            titleLabel.text = "??? 님\n반가워요!"
         }
     }
     
