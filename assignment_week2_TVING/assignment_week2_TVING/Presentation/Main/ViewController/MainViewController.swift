@@ -11,14 +11,6 @@ import SnapKit
 class MainViewController: UIViewController {
     
     // MARK: - Properties
-    // 오늘의 티빙 어쩌고 20해도 될 듯(함수로 묶을 필요는 없는 것 같다)
-    lazy var sectionTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "오늘의 티빙 TOP 20"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 15)
-        return label
-    }()
     let scrollView = UIScrollView()
     let contentView = UIView()
     let headerView = TopHeaderView()
@@ -29,7 +21,59 @@ class MainViewController: UIViewController {
     let categories = ["홈", "드라마", "예능", "영화", "스포츠", "뉴스"]
     var selectedIndex = 0
     
-    let todayTop = TodayTopView()
+    let todayTop = TodaysTop20()
+    let popularLive = RealTimePopularLive()
+    let popularMovie = RealTimePopularMovie()
+    let baseball = Baseball()
+    let channel = Channel()
+    let masterpiece = Masterpiece()
+    
+    private let footerContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private let noticeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "공지"
+        label.textColor = UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 11)
+        return label
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "티빙 계정 공유 정책 추가 안내"
+        label.textColor = UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 11)
+        return label
+    }()
+    
+    private let arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.forward")
+        imageView.tintColor = .white
+        return imageView
+    }()
+    
+    private let footerLabel: UILabel = {
+        let label = UILabel()
+        let text = "고객문의 • 이용약관 • 개인정보처리방침\n사업자정보 • 인재채용"
+        let attributedText = NSMutableAttributedString(string: text, attributes: [
+            .foregroundColor: UIColor(white: 140/255, alpha: 1)
+        ])
+        
+        if let range = text.range(of: "개인정보처리방침") {
+            attributedText.addAttribute(.foregroundColor, value: UIColor(white: 217/255, alpha: 1), range: NSRange(range, in: text))
+        }
+        
+        label.attributedText = attributedText
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.numberOfLines = 0
+        return label
+    }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -37,7 +81,6 @@ class MainViewController: UIViewController {
         view.backgroundColor = .black
         navigationController?.isNavigationBarHidden = true
         
-        // 메서드만 선언할 수 있게
         setUI()
         setCategoryStackView()
         setUnderline()
@@ -52,8 +95,18 @@ class MainViewController: UIViewController {
         contentView.addSubview(categoryStackView)
         contentView.addSubview(underlineView)
         contentView.addSubview(posterImageView)
-        contentView.addSubview(sectionTitleLabel)
         contentView.addSubview(todayTop)
+        contentView.addSubview(popularLive)
+        contentView.addSubview(popularMovie)
+        contentView.addSubview(baseball)
+        contentView.addSubview(channel)
+        contentView.addSubview(masterpiece)
+        contentView.addSubview(footerContainerView)
+        contentView.addSubview(footerLabel)
+        
+        footerContainerView.addSubview(noticeLabel)
+        footerContainerView.addSubview(descriptionLabel)
+        footerContainerView.addSubview(arrowImageView)
     }
     
     private func setCategoryStackView() {
@@ -100,6 +153,7 @@ class MainViewController: UIViewController {
         headerView.view.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
         categoryStackView.snp.makeConstraints {
@@ -114,17 +168,69 @@ class MainViewController: UIViewController {
             $0.height.equalTo(420)
         }
         
-        sectionTitleLabel.snp.makeConstraints {
+        todayTop.snp.makeConstraints {
             $0.top.equalTo(posterImageView.snp.bottom).offset(9)
-            $0.leading.equalToSuperview().offset(12)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(200)
         }
         
-        todayTop.snp.makeConstraints {
-            $0.top.equalTo(sectionTitleLabel.snp.bottom).offset(10)
+        popularLive.snp.makeConstraints {
+            $0.top.equalTo(todayTop.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(230)
-            $0.bottom.equalToSuperview().inset(30)
-            
+            $0.height.equalTo(200)
+        }
+        
+        popularMovie.snp.makeConstraints {
+            $0.top.equalTo(popularLive.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(200)
+        }
+        
+        baseball.snp.makeConstraints {
+            $0.top.equalTo(popularMovie.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+        
+        channel.snp.makeConstraints {
+            $0.top.equalTo(baseball.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        masterpiece.snp.makeConstraints {
+            $0.top.equalTo(channel.snp.bottom).offset(25)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(100)
+        }
+        
+        footerContainerView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(masterpiece.snp.bottom).offset(50)
+            $0.width.equalTo(387)
+            $0.height.equalTo(50)
+        }
+        
+        noticeLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        descriptionLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(noticeLabel.snp.trailing).offset(8)
+        }
+        
+        arrowImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(12)
+            $0.size.equalTo(18)
+        }
+        
+        footerLabel.snp.makeConstraints {
+            $0.top.equalTo(footerContainerView.snp.bottom).offset(16)
+            $0.leading.equalTo(footerContainerView.snp.leading)
+            $0.bottom.equalToSuperview().inset(50)
         }
     }
 }
