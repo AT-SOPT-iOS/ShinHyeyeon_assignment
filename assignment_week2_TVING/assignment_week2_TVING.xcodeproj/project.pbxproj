@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		249293382DBBC64D007AD36D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 249293372DBBC64D007AD36D /* SnapKit */; };
+		24C8ECE12DC5393300116097 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24C8ECE02DC5393300116097 /* Then */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				249293382DBBC64D007AD36D /* SnapKit in Frameworks */,
+				24C8ECE12DC5393300116097 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = assignment_week2_TVING;
 			packageProductDependencies = (
 				249293372DBBC64D007AD36D /* SnapKit */,
+				24C8ECE02DC5393300116097 /* Then */,
 			);
 			productName = assignment_week2_TVING;
 			productReference = 249292F62DBBB4E0007AD36D /* assignment_week2_TVING.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				249293362DBBC64D007AD36D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				24C8ECDF2DC5393300116097 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 249292F72DBBB4E0007AD36D /* Products */;
@@ -360,6 +364,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		24C8ECDF2DC5393300116097 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -367,6 +379,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 249293362DBBC64D007AD36D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		24C8ECE02DC5393300116097 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24C8ECDF2DC5393300116097 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
