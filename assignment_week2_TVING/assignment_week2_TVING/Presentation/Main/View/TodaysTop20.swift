@@ -17,7 +17,7 @@ class TodaysTop20: UIView {
         let label = UILabel()
         label.text = "오늘의 티빙 TOP 20"
         label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-Bold", size: 15)
         return label
     }()
     
@@ -57,7 +57,7 @@ class TodaysTop20: UIView {
     private func setLayout() {
         sectionTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(12)
+            $0.leading.equalToSuperview()
         }
         
         collectionView.snp.makeConstraints {

@@ -20,24 +20,24 @@ class RealTimePopularLiveCell: UICollectionViewCell {
     }
     
     private let liveRankLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 19)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 19)
         $0.textColor = .white
         $0.transform = CGAffineTransform(rotationAngle: 0.15)
     }
     
     private let liveTitleLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 10)
+        $0.font = UIFont(name: "Pretendard-Medium", size: 10)
     }
     
     private let liveEpisodeLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: 10)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 10)
     }
     
     private let liveRatingsLabel = UILabel().then {
         $0.textColor = .gray
-        $0.font = UIFont.systemFont(ofSize: 10)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 10)
     }
     
 
@@ -67,14 +67,14 @@ class RealTimePopularLiveCell: UICollectionViewCell {
     
     private func setLayout() {
         liveImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(8)
+            $0.leading.equalToSuperview()
             $0.height.equalTo(80)
             $0.width.equalTo(160)
         }
         
         liveRankLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.top.equalTo(liveImageView.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(8)
+            $0.top.equalTo(liveImageView.snp.bottom).offset(10)
         }
         
         liveTitleLabel.snp.makeConstraints {

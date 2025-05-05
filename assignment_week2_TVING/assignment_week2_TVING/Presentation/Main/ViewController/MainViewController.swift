@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
     let masterpiece = Masterpiece()
     
     private let posterImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "main_poster")
         $0.clipsToBounds = true
     }
@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
         let label = UILabel()
         label.text = "공지"
         label.textColor = UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 11)
+        label.font = UIFont(name: "Pretendard-Medium", size: 11)
         return label
     }()
     
@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
         let label = UILabel()
         label.text = "티빙 계정 공유 정책 추가 안내"
         label.textColor = UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 11)
+        label.font = UIFont(name: "Pretendard-Medium", size: 11)
         return label
     }()
     
@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
         }
         
         label.attributedText = attributedText
-        label.font = UIFont.systemFont(ofSize: 11)
+        label.font = UIFont(name: "Pretendard-Medium", size: 11)
         label.numberOfLines = 0
         return label
     }()
@@ -134,37 +134,41 @@ class MainViewController: UIViewController {
         
         todayTop.snp.makeConstraints {
             $0.top.equalTo(posterImageView.snp.bottom).offset(9)
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview().offset(12)
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(200)
         }
         
         popularLive.snp.makeConstraints {
             $0.top.equalTo(todayTop.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.leading.equalToSuperview().offset(13)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(190)
         }
         
         popularMovie.snp.makeConstraints {
             $0.top.equalTo(popularLive.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(190)
         }
         
         baseball.snp.makeConstraints {
             $0.top.equalTo(popularMovie.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(80)
         }
         
         channel.snp.makeConstraints {
-            $0.top.equalTo(baseball.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(baseball.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
         
         masterpiece.snp.makeConstraints {
             $0.top.equalTo(channel.snp.bottom).offset(25)
-            $0.leading.equalToSuperview().offset(16)
+            $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
@@ -195,7 +199,7 @@ class MainViewController: UIViewController {
         
         footerLabel.snp.makeConstraints {
             $0.top.equalTo(footerContainerView.snp.bottom).offset(16)
-            $0.leading.equalTo(footerContainerView.snp.leading)
+            $0.leading.equalToSuperview().offset(20)
             $0.bottom.equalToSuperview().inset(50)
         }
     }

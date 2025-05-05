@@ -17,7 +17,7 @@ class RealTimePopularMovie: UIView {
         let label = UILabel()
         label.text = "실시간 인기 영화"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-Bold", size: 15)
         return label
     }()
     
@@ -25,7 +25,7 @@ class RealTimePopularMovie: UIView {
         let label = UILabel()
         label.text = "더보기"
         label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Pretendard-Medium", size: 12)
         return label
     }()
     
@@ -65,18 +65,17 @@ class RealTimePopularMovie: UIView {
     private func setLayout() {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(8)
         }
         
         moreLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-8)
+            $0.trailing.equalToSuperview().offset(-10)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().offset(15)
-            $0.height.equalTo(160)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(13)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(150)
         }
     }
     

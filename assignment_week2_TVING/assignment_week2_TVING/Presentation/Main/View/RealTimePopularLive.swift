@@ -17,7 +17,7 @@ class RealTimePopularLive: UIView {
         let label = UILabel()
         label.text = "실시간 인기 LIVE"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-Bold", size: 15)
         return label
     }()
     
@@ -25,7 +25,7 @@ class RealTimePopularLive: UIView {
         let label = UILabel()
         label.text = "더보기"
         label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont(name: "Pretendard-Medium", size: 12)
         return label
     }()
     
@@ -68,12 +68,11 @@ class RealTimePopularLive: UIView {
     private func setLayout() {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(8)
         }
         
         moreLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-8)
+            $0.trailing.equalToSuperview().offset(-10)
         }
         
         collectionView.snp.makeConstraints {

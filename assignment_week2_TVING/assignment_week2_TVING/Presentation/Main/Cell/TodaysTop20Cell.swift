@@ -15,7 +15,7 @@ class TodaysTop20Cell: UICollectionViewCell {
     
     private let todayTopLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 50)
+        $0.font = UIFont(name: "Pretendard-SemiBold", size: 50)
         $0.transform = CGAffineTransform(rotationAngle: 0.15)
     }
     

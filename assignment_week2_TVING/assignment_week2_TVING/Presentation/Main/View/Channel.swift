@@ -47,7 +47,7 @@ class Channel: UIView, UICollectionViewDelegate {
     private func setLayout() {
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(12)
+            $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }

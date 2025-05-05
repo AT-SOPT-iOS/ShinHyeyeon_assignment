@@ -17,7 +17,7 @@ class Masterpiece: UIView {
         let label = UILabel()
         label.text = "신혜연PD의 인생작 TOP 5"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-Bold", size: 15)
         return label
     }()
     
@@ -57,12 +57,12 @@ class Masterpiece: UIView {
     private func setLayout() {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(8)
+            $0.leading.equalToSuperview().offset(15)
         }
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(13)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
