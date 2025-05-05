@@ -22,8 +22,8 @@ class ChannelCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
         
+        setUI()
         setLayout()
     }
     
@@ -31,19 +31,22 @@ class ChannelCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
-    private func setLayout() {
+    // MARK: - UI Setting
+    private func setUI() {
         addSubview(channelImageView)
-        
+    }
+    
+    private func setLayout() {
         channelImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(12)
             $0.width.equalTo(90)
             $0.height.equalTo(45)
         }
     }
-    
-    func configure(_ content: ChannelContent) {
-        channelImageView.image = content.logoImage
+}
+
+extension ChannelCell {
+    func dataBind(_ itemData: ChannelContent, itemRow: Int) {
+        channelImageView.image = itemData.logoImage
     }
 }

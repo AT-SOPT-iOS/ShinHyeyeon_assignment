@@ -37,7 +37,6 @@ class RealTimePopularMovie: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(RealTimePopularMovieCell.self, forCellWithReuseIdentifier: RealTimePopularMovieCell.identifier)
         return collectionView
     }()
     
@@ -45,9 +44,9 @@ class RealTimePopularMovie: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .black
-        
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -55,12 +54,15 @@ class RealTimePopularMovie: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(
+            titleLabel,
+            moreLabel,
+            collectionView
+        )
+    }
     private func setLayout() {
-        addSubview(titleLabel)
-        addSubview(moreLabel)
-        addSubview(collectionView)
-        
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(8)
@@ -77,20 +79,19 @@ class RealTimePopularMovie: UIView {
             $0.height.equalTo(160)
         }
     }
-                   
-    
-// MARK: - Delegate
-    private func setDelegate() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
     
     private func setCollectionView() {
         collectionView.register(RealTimePopularMovieCell.self, forCellWithReuseIdentifier: RealTimePopularMovieCell.identifier)
     }
+    
+    // MARK: - Delegate
+    private func setDelegate() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension RealTimePopularMovie: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

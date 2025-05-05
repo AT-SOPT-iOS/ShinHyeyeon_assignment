@@ -14,9 +14,9 @@ class RealTimePopularLiveCell: UICollectionViewCell {
     static let identifier = "RealTimePopularLiveCell"
     
     private let liveImageView = UIImageView().then {
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 3
         $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 3
+        $0.clipsToBounds = true
     }
     
     private let liveRankLabel = UILabel().then {
@@ -46,6 +46,7 @@ class RealTimePopularLiveCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setUI()
         setLayout()
     }
     
@@ -53,12 +54,18 @@ class RealTimePopularLiveCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(
+            liveImageView,
+            liveRankLabel,
+            liveTitleLabel,
+            liveEpisodeLabel,
+            liveRatingsLabel
+        )
+    }
+    
     private func setLayout() {
-        [liveImageView, liveRankLabel, liveTitleLabel, liveEpisodeLabel, liveRatingsLabel].forEach {
-            contentView.addSubview($0)
-        }
-        
         liveImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(8)
             $0.height.equalTo(80)

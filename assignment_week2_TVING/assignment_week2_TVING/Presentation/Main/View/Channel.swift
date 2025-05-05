@@ -11,18 +11,17 @@ import SnapKit
 class Channel: UIView, UICollectionViewDelegate {
     
     // MARK: - Properties
-    private var contentList = ChannelContent.dummy()
-//    private let itemData = ChannelContent.dummy()
-    
+    private var itemData = ChannelContent.dummy()
+
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 7
         layout.itemSize = CGSize(width: 90, height: 45)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(ChannelCell.self, forCellWithReuseIdentifier: ChannelCell.identifier)
         return collectionView
     }()
     
@@ -30,9 +29,9 @@ class Channel: UIView, UICollectionViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .black
-        
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -40,36 +39,38 @@ class Channel: UIView, UICollectionViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
-    private func setLayout() {
+    // MARK: - UI Setting
+    private func setUI() {
         addSubview(collectionView)
-        
+    }
+    
+    private func setLayout() {
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview().offset(12)
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
     }
-                   
+    
+    private func setCollectionView() {
+        collectionView.register(ChannelCell.self, forCellWithReuseIdentifier: ChannelCell.identifier)
+    }
     
 // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
-    private func setCollectionView() {
-        collectionView.register(ChannelCell.self, forCellWithReuseIdentifier: ChannelCell.identifier)
-    }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension Channel: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return contentList.count
+        return itemData.count
     }
 
     func collectionView(
@@ -82,7 +83,7 @@ extension Channel: UICollectionViewDataSource {
         ) as? ChannelCell else {
             return UICollectionViewCell()
         }
-        cell.configure(contentList[indexPath.row])
+        cell.dataBind(itemData[indexPath.item], itemRow: indexPath.item)
         return cell
     }
 }

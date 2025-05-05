@@ -39,7 +39,7 @@ class Baseball: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
     private func setLayout() {
         addSubview(collectionView)
         
@@ -62,7 +62,7 @@ class Baseball: UIView {
     }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension Baseball: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -73,7 +73,7 @@ extension Baseball: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseballCell.identifier, for: indexPath) as? BaseballCell else {
             return UICollectionViewCell()
         }
-        cell.configure(itemData[indexPath.item], index: indexPath.item)
+        cell.dataBind(itemData[indexPath.item], itemRow: indexPath.item)
         return cell
     }
 }

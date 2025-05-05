@@ -17,13 +17,15 @@ class MasterpieceCell: UICollectionViewCell {
   
     private let masterPieceImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
+        $0.layer.cornerRadius = 3
+        $0.clipsToBounds = true
     }
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
         
+        setUI()
         setLayout()
     }
     
@@ -31,13 +33,14 @@ class MasterpieceCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubview(masterPieceImageView)
+    }
+    
     private func setLayout() {
-        contentView.addSubview(masterPieceImageView)
-        
         masterPieceImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
             $0.width.equalTo(160)
             $0.height.equalTo(90)
         }

@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-// UIView로 변경하기
 class RealTimePopularLive: UIView {
     
     // MARK: - Properties
@@ -38,7 +37,6 @@ class RealTimePopularLive: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(RealTimePopularLiveCell.self, forCellWithReuseIdentifier: RealTimePopularLiveCell.identifier)
         return collectionView
     }()
     
@@ -48,7 +46,9 @@ class RealTimePopularLive: UIView {
         
         self.backgroundColor = .black
         
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -56,12 +56,16 @@ class RealTimePopularLive: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(
+            titleLabel,
+            moreLabel,
+            collectionView
+        )
+    }
+    
     private func setLayout() {
-        addSubview(titleLabel)
-        addSubview(moreLabel)
-        addSubview(collectionView)
-        
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(8)
@@ -79,19 +83,18 @@ class RealTimePopularLive: UIView {
         }
     }
     
+    private func setCollectionView() {
+        collectionView.register(RealTimePopularLiveCell.self, forCellWithReuseIdentifier: RealTimePopularLiveCell.identifier)
+    }
     
     // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
-    private func setCollectionView() {
-        collectionView.register(TodaysTop20Cell.self, forCellWithReuseIdentifier: TodaysTop20Cell.identifier)
-    }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension RealTimePopularLive: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

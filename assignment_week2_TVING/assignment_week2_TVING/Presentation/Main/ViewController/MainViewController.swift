@@ -7,19 +7,13 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class MainViewController: UIViewController {
     
     // MARK: - Properties
     let scrollView = UIScrollView()
     let contentView = UIView()
-    let headerView = TopHeaderView()
-    let categoryStackView = UIStackView()
-    let underlineView = UIView()
-    let posterImageView = UIImageView()
-    
-    let categories = ["홈", "드라마", "예능", "영화", "스포츠", "뉴스"]
-    var selectedIndex = 0
     
     let todayTop = TodaysTop20()
     let popularLive = RealTimePopularLive()
@@ -27,6 +21,12 @@ class MainViewController: UIViewController {
     let baseball = Baseball()
     let channel = Channel()
     let masterpiece = Masterpiece()
+    
+    private let posterImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "main_poster")
+        $0.clipsToBounds = true
+    }
     
     private let footerContainerView: UIView = {
         let view = UIView()
@@ -78,67 +78,43 @@ class MainViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
-        navigationController?.isNavigationBarHidden = true
         
+        setStyle()
         setUI()
-        setCategoryStackView()
-        setUnderline()
-        setPosterImageView()
         setLayout()
+    }
+    
+    // MARK: - UI Setting
+    private func setStyle() {
+        view.backgroundColor = .black
+        scrollView.showsVerticalScrollIndicator = false
+        navigationController?.isNavigationBarHidden = true
     }
     
     private func setUI() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubview(headerView.view)
-        contentView.addSubview(categoryStackView)
-        contentView.addSubview(underlineView)
-        contentView.addSubview(posterImageView)
-        contentView.addSubview(todayTop)
-        contentView.addSubview(popularLive)
-        contentView.addSubview(popularMovie)
-        contentView.addSubview(baseball)
-        contentView.addSubview(channel)
-        contentView.addSubview(masterpiece)
-        contentView.addSubview(footerContainerView)
-        contentView.addSubview(footerLabel)
         
-        footerContainerView.addSubview(noticeLabel)
-        footerContainerView.addSubview(descriptionLabel)
-        footerContainerView.addSubview(arrowImageView)
-    }
-    
-    private func setCategoryStackView() {
-        categoryStackView.axis = .horizontal
-        categoryStackView.distribution = .fillEqually
-        categoryStackView.alignment = .fill
-        categoryStackView.spacing = 0
+        contentView.addSubviews(
+            posterImageView,
+            todayTop,
+            popularLive,
+            popularMovie,
+            baseball,
+            channel,
+            masterpiece,
+            footerContainerView,
+            footerLabel
+        )
         
-        for (index, title) in categories.enumerated() {
-            let label = UILabel()
-            label.text = title
-            label.textColor = .white
-            label.textAlignment = .center
-            label.isUserInteractionEnabled = true
-            label.tag = index
-            
-            categoryStackView.addArrangedSubview(label)
-        }
-    }
-    
-    private func setUnderline() {
-        underlineView.backgroundColor = .white
-    }
-    
-    private func setPosterImageView() {
-        posterImageView.image = UIImage(named: "main_poster")
-        posterImageView.contentMode = .scaleAspectFill
-        posterImageView.clipsToBounds = true
+        footerContainerView.addSubviews(
+            noticeLabel,
+            descriptionLabel,
+            arrowImageView
+        )
     }
     
     private func setLayout() {
-        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.right.bottom.equalToSuperview()
@@ -150,22 +126,10 @@ class MainViewController: UIViewController {
             $0.height.greaterThanOrEqualToSuperview().priority(.low)
         }
         
-        headerView.view.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(60)
-        }
-        
-        categoryStackView.snp.makeConstraints {
-            $0.top.equalTo(headerView.view.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(27)
-        }
-        
         posterImageView.snp.makeConstraints {
-            $0.top.equalTo(categoryStackView.snp.bottom).offset(7)
+            $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(420)
+            $0.height.equalTo(440)
         }
         
         todayTop.snp.makeConstraints {
@@ -200,14 +164,16 @@ class MainViewController: UIViewController {
         
         masterpiece.snp.makeConstraints {
             $0.top.equalTo(channel.snp.bottom).offset(25)
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
         
         footerContainerView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(masterpiece.snp.bottom).offset(50)
-            $0.width.equalTo(387)
+            $0.leading.equalToSuperview().offset(14)
+            $0.trailing.equalToSuperview().offset(-14)
             $0.height.equalTo(50)
         }
         

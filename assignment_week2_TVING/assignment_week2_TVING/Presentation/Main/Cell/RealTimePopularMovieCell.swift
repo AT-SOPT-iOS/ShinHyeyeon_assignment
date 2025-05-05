@@ -14,16 +14,16 @@ class RealTimePopularMovieCell: UICollectionViewCell {
     static let identifier = "RealTimePopularMovieCell"
     
     private let movieImageView = UIImageView().then {
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 3
         $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 3
+        $0.clipsToBounds = true
     }
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
         
+        setUI()
         setLayout()
     }
     
@@ -31,12 +31,12 @@ class RealTimePopularMovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubview(movieImageView)
+    }
+    
     private func setLayout() {
-        [movieImageView].forEach {
-            contentView.addSubview($0)
-        }
-        
         movieImageView.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.width.equalTo(98)

@@ -24,14 +24,12 @@ class TodaysTop20: UIView {
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 20
-        layout.itemSize = CGSize(width: 140, height: 146)
+        layout.itemSize = CGSize(width: 135, height: 146)
+        layout.minimumInteritemSpacing = 12
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(TodaysTop20Cell.self, forCellWithReuseIdentifier: TodaysTop20Cell.identifier)
         return collectionView
     }()
     
@@ -41,7 +39,9 @@ class TodaysTop20: UIView {
         
         self.backgroundColor = .black
         
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -49,11 +49,12 @@ class TodaysTop20: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(sectionTitleLabel, collectionView)
+    }
+    
     private func setLayout() {
-        addSubview(sectionTitleLabel)
-        addSubview(collectionView)
-        
         sectionTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(12)
@@ -66,27 +67,22 @@ class TodaysTop20: UIView {
         }
     }
                    
+    private func setCollectionView() {
+        collectionView.register(TodaysTop20Cell.self, forCellWithReuseIdentifier: TodaysTop20Cell.identifier)
+    }
     
 // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
-    private func setCollectionView() {
-        collectionView.register(TodaysTop20Cell.self, forCellWithReuseIdentifier: TodaysTop20Cell.identifier)
-    }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension TodaysTop20: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

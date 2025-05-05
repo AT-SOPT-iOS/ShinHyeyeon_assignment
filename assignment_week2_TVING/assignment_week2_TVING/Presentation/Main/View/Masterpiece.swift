@@ -24,12 +24,12 @@ class Masterpiece: UIView {
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 8
         layout.itemSize = CGSize(width: 160, height: 90)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(MasterpieceCell.self, forCellWithReuseIdentifier: MasterpieceCell.identifier)
         return collectionView
     }()
     
@@ -39,7 +39,9 @@ class Masterpiece: UIView {
         
         self.backgroundColor = .black
         
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -47,11 +49,12 @@ class Masterpiece: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(titleLabel, collectionView)
+    }
+    
     private func setLayout() {
-        addSubview(titleLabel)
-        addSubview(collectionView)
-        
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(8)
@@ -59,24 +62,24 @@ class Masterpiece: UIView {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(13)
-            $0.horizontalEdges.equalToSuperview().offset(8)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(100)
         }
-    }
-                   
-    
-// MARK: - Delegate
-    private func setDelegate() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
     }
     
     private func setCollectionView() {
         collectionView.register(MasterpieceCell.self, forCellWithReuseIdentifier: MasterpieceCell.identifier)
     }
+    
+    // MARK: - Delegate
+    private func setDelegate() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
 }
 
-// MARK: - UICollectionView Delegate & DataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension Masterpiece: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

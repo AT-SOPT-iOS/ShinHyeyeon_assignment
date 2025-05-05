@@ -20,15 +20,16 @@ class TodaysTop20Cell: UICollectionViewCell {
     }
     
     private let todayTopImageView = UIImageView().then {
-        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 3
-        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
     }
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setUI()
         setLayout()
     }
     
@@ -36,15 +37,15 @@ class TodaysTop20Cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubviews(todayTopLabel, todayTopImageView)
+    }
+    
     private func setLayout() {
-        [todayTopLabel, todayTopImageView].forEach {
-            contentView.addSubview($0)
-        }
-        
         todayTopLabel.snp.makeConstraints {
             $0.bottom.equalTo(todayTopImageView.snp.bottom)
-            $0.leading.equalToSuperview().offset(6)
+            $0.leading.equalToSuperview()
         }
         
         todayTopImageView.snp.makeConstraints {

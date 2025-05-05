@@ -22,8 +22,8 @@ class BaseballCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
         
+        setUI()
         setLayout()
     }
     
@@ -31,14 +31,15 @@ class BaseballCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout
-    private func setLayout() {
-        contentView.addSubview(backgroundContainerView)
+    // MARK: - UI Setting
+    private func setUI() {
+        addSubview(backgroundContainerView)
         backgroundContainerView.addSubview(baseballImageView)
-        
+    }
+    
+    private func setLayout() {
         backgroundContainerView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
             $0.width.equalTo(80)
             $0.height.equalTo(50)
         }
@@ -48,15 +49,12 @@ class BaseballCell: UICollectionViewCell {
             $0.size.equalTo(40)
         }
     }
-    
-    func configure(_ content: BaseballContent, index: Int) {
-        baseballImageView.image = content.logoImage
-        backgroundContainerView.backgroundColor = index % 2 == 1 ? .clear : .white
-    }
 }
 
+// 셀의 홀/짝 여부에 따라 배경 색상 지정
 extension BaseballCell {
     func dataBind(_ itemData: BaseballContent, itemRow: Int) {
         baseballImageView.image = itemData.logoImage
+        backgroundContainerView.backgroundColor = itemRow % 2 == 1 ? .clear : .white
     }
 }
