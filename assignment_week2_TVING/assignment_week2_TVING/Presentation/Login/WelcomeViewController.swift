@@ -80,6 +80,7 @@ class WelcomeViewController : UIViewController {
     
     @objc
     private func backToLoginButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
+        let mainVC = MainViewController()
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
