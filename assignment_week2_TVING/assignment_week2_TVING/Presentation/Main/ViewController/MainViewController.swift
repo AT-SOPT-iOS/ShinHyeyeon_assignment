@@ -2,78 +2,57 @@
 //  MainViewController.swift
 //  assignment_week2_TVING
 //
-//  Created by 신혜연 on 5/2/25.
+//  Created by 신혜연 on 5/5/25.
 //
 
 import UIKit
-import SnapKit
 import Then
 
 class MainViewController: UIViewController {
     
     // MARK: - Properties
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     
-    let todayTop = TodaysTop20()
-    let popularLive = RealTimePopularLive()
-    let popularMovie = RealTimePopularMovie()
-    let baseball = Baseball()
-    let channel = Channel()
-    let masterpiece = Masterpiece()
+    let categories = ["홈", "드라마", "예능", "영화", "스포츠", "뉴스"]
     
-    private let posterImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.image = UIImage(named: "main_poster")
-        $0.clipsToBounds = true
+    private let tvingTitleImageView = UIImageView().then  {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "tving_title")
     }
     
-    private let footerContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
-        view.layer.cornerRadius = 5
-        return view
-    }()
+    private let headerStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 16
+        $0.alignment = .center
+    }
     
-    private let noticeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "공지"
-        label.textColor = UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1)
-        label.font = UIFont(name: "Pretendard-Medium", size: 11)
-        return label
-    }()
+    private let searchImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "search")
+    }
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "티빙 계정 공유 정책 추가 안내"
-        label.textColor = UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
-        label.font = UIFont(name: "Pretendard-Medium", size: 11)
-        return label
-    }()
+    private let tvingLogoImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "logo")
+    }
     
-    private let arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.forward")
-        imageView.tintColor = .white
-        return imageView
-    }()
-    
-    private let footerLabel: UILabel = {
-        let label = UILabel()
-        let text = "고객문의 • 이용약관 • 개인정보처리방침\n사업자정보 • 인재채용"
-        let attributedText = NSMutableAttributedString(string: text, attributes: [
-            .foregroundColor: UIColor(white: 140/255, alpha: 1)
-        ])
+    private lazy var segmentedControl = UISegmentedControl(items: categories).then {
+        let font = UIFont(name: "Pretendard-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17)
         
-        if let range = text.range(of: "개인정보처리방침") {
-            attributedText.addAttribute(.foregroundColor, value: UIColor(white: 217/255, alpha: 1), range: NSRange(range, in: text))
-        }
-        
-        label.attributedText = attributedText
-        label.font = UIFont(name: "Pretendard-Medium", size: 11)
-        label.numberOfLines = 0
-        return label
-    }()
+        $0.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
+        $0.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .selected)
+        $0.backgroundColor = .clear
+        $0.removeBackgroundAndDivider()
+        $0.selectedSegmentIndex = 0
+        $0.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+    }
+    
+    private let underlineView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
+    private var currentChildVC: UIViewController?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -82,36 +61,32 @@ class MainViewController: UIViewController {
         setStyle()
         setUI()
         setLayout()
+        updateUnderlinePosition(animated: false)
+        showChildViewController(for: segmentedControl.selectedSegmentIndex)
     }
     
     // MARK: - UI Setting
     private func setStyle() {
         view.backgroundColor = .black
-        scrollView.showsVerticalScrollIndicator = false
         navigationController?.isNavigationBarHidden = true
     }
     
     private func setUI() {
         view.addSubview(scrollView)
+        
         scrollView.addSubview(contentView)
         
         contentView.addSubviews(
-            posterImageView,
-            todayTop,
-            popularLive,
-            popularMovie,
-            baseball,
-            channel,
-            masterpiece,
-            footerContainerView,
-            footerLabel
+            tvingTitleImageView,
+            headerStackView,
+            searchImageView,
+            tvingLogoImageView,
+            segmentedControl,
+            underlineView
         )
         
-        footerContainerView.addSubviews(
-            noticeLabel,
-            descriptionLabel,
-            arrowImageView
-        )
+        headerStackView.addArrangedSubview(searchImageView)
+        headerStackView.addArrangedSubview(tvingLogoImageView)
     }
     
     private func setLayout() {
@@ -126,81 +101,97 @@ class MainViewController: UIViewController {
             $0.height.greaterThanOrEqualToSuperview().priority(.low)
         }
         
-        posterImageView.snp.makeConstraints {
+        tvingTitleImageView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(440)
-        }
-        
-        todayTop.snp.makeConstraints {
-            $0.top.equalTo(posterImageView.snp.bottom).offset(9)
-            $0.leading.equalToSuperview().offset(12)
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(200)
-        }
-        
-        popularLive.snp.makeConstraints {
-            $0.top.equalTo(todayTop.snp.bottom)
-            $0.leading.equalToSuperview().offset(13)
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(190)
-        }
-        
-        popularMovie.snp.makeConstraints {
-            $0.top.equalTo(popularLive.snp.bottom)
-            $0.leading.equalToSuperview().offset(15)
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(190)
-        }
-        
-        baseball.snp.makeConstraints {
-            $0.top.equalTo(popularMovie.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(80)
-        }
-        
-        channel.snp.makeConstraints {
-            $0.top.equalTo(baseball.snp.bottom).offset(28)
-            $0.leading.equalToSuperview().offset(15)
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(50)
-        }
-        
-        masterpiece.snp.makeConstraints {
-            $0.top.equalTo(channel.snp.bottom).offset(25)
             $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.width.equalTo(191)
+            $0.height.equalTo(78)
         }
         
-        footerContainerView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(masterpiece.snp.bottom).offset(50)
-            $0.leading.equalToSuperview().offset(14)
-            $0.trailing.equalToSuperview().offset(-14)
-            $0.height.equalTo(50)
+        headerStackView.snp.makeConstraints {
+            $0.centerY.equalTo(tvingTitleImageView)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
-        noticeLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(16)
+        [searchImageView, tvingLogoImageView].forEach {
+            $0.snp.makeConstraints {
+                $0.size.equalTo(30)
+            }
         }
         
-        descriptionLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalTo(noticeLabel.snp.trailing).offset(8)
+        segmentedControl.snp.makeConstraints {
+            $0.top.equalTo(headerStackView.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(32)
         }
         
-        arrowImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(12)
-            $0.size.equalTo(18)
+        underlineView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.width.equalTo(15)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(segmentedControl.snp.leading)
+        }
+    }
+    
+    // MARK: - UI Action
+    @objc private func segmentChanged(_ sender: UISegmentedControl) {
+        print("선택된 카테고리: \(categories[sender.selectedSegmentIndex])")
+        updateUnderlinePosition(animated: true)
+    }
+    
+    // 언더라인 가운데 배치
+    private func updateUnderlinePosition(animated: Bool = true) {
+        let segmentWidth = segmentedControl.frame.width / CGFloat(categories.count)
+        let centerX = segmentWidth * (CGFloat(segmentedControl.selectedSegmentIndex) + 0.5)
+        
+        underlineView.snp.updateConstraints {
+            $0.centerX.equalTo(segmentedControl.snp.leading).offset(centerX)
         }
         
-        footerLabel.snp.makeConstraints {
-            $0.top.equalTo(footerContainerView.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalToSuperview().inset(50)
+        if animated {
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
+    }
+    
+    // MARK: - ChildViewController 관리
+    private func showChildViewController(for index: Int) {
+        // 이전 VC 제거하기
+        if let current = currentChildVC {
+            current.willMove(toParent: nil)
+            current.view.removeFromSuperview()
+            current.removeFromParent()
+        }
+        
+        // 새로운 VC 보여주기
+        let newVC: UIViewController
+        switch index {
+        case 0:
+            newVC = HomeViewController()
+        default:
+            newVC = HomeViewController()
+        }
+        
+        addChild(newVC)
+        contentView.addSubview(newVC.view)
+        
+        newVC.view.snp.makeConstraints {
+            $0.top.equalTo(underlineView.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        newVC.didMove(toParent: self)
+        currentChildVC = newVC
+    }
+}
+
+extension UISegmentedControl {
+    func removeBackgroundAndDivider() {
+        let clearImage = UIImage()
+        setBackgroundImage(clearImage, for: .normal, barMetrics: .default)
+        setBackgroundImage(clearImage, for: .selected, barMetrics: .default)
+        setBackgroundImage(clearImage, for: .highlighted, barMetrics: .default)
+        setDividerImage(clearImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }
 }
