@@ -15,12 +15,12 @@ class HomeViewController: UIViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     
-    let todayTop = TodaysTop20()
-    let popularLive = RealTimePopularLive()
-    let popularMovie = RealTimePopularMovie()
-    let baseball = Baseball()
-    let channel = Channel()
-    let masterpiece = Masterpiece()
+    let todayTop = TodaysTop20View()
+    let popularLive = RealTimePopularLiveView()
+    let popularMovie = RealTimePopularMovieView()
+    let baseball = BaseballView()
+    let channel = ChannelView()
+    let masterpiece = MasterpieceView()
     
     private let posterImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill

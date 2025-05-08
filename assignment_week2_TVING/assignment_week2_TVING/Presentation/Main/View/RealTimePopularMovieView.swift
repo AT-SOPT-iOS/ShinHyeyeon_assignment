@@ -1,5 +1,5 @@
 //
-//  TodaysTop20.swift
+//  RealTimePopularMovieView.swift
 //  assignment_week2_TVING
 //
 //  Created by 신혜연 on 5/3/25.
@@ -8,24 +8,31 @@
 import UIKit
 import SnapKit
 
-class TodaysTop20: UIView {
+class RealTimePopularMovieView: UIView {
     
     // MARK: - Properties
-    private let itemData = TodaysTop20Content.dummy()
+    private let itemData = RealTimePopularMovieContent.dummy()
     
-    lazy var sectionTitleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘의 티빙 TOP 20"
+        label.text = "실시간 인기 영화"
         label.textColor = .white
         label.font = UIFont(name: "Pretendard-Bold", size: 15)
+        return label
+    }()
+    
+    private let moreLabel: UILabel = {
+        let label = UILabel()
+        label.text = "더보기"
+        label.textColor = .gray
+        label.font = UIFont(name: "Pretendard-Medium", size: 12)
         return label
     }()
     
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 135, height: 146)
-        layout.minimumInteritemSpacing = 12
+        layout.itemSize = CGSize(width: 98, height: 146)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
@@ -36,8 +43,6 @@ class TodaysTop20: UIView {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.backgroundColor = .black
         
         setUI()
         setLayout()
@@ -51,27 +56,34 @@ class TodaysTop20: UIView {
     
     // MARK: - UI Setting
     private func setUI() {
-        addSubviews(sectionTitleLabel, collectionView)
+        addSubviews(
+            titleLabel,
+            moreLabel,
+            collectionView
+        )
     }
-    
     private func setLayout() {
-        sectionTitleLabel.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
+        }
+        
+        moreLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-10)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(sectionTitleLabel.snp.bottom).offset(9)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(13)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(150)
         }
     }
-                   
+    
     private func setCollectionView() {
-        collectionView.register(TodaysTop20Cell.self, forCellWithReuseIdentifier: TodaysTop20Cell.identifier)
+        collectionView.register(RealTimePopularMovieCell.self, forCellWithReuseIdentifier: RealTimePopularMovieCell.identifier)
     }
     
-// MARK: - Delegate
+    // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -79,14 +91,14 @@ class TodaysTop20: UIView {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension TodaysTop20: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RealTimePopularMovieView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodaysTop20Cell.identifier, for: indexPath) as? TodaysTop20Cell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RealTimePopularMovieCell.identifier, for: indexPath) as? RealTimePopularMovieCell else {
             return UICollectionViewCell()
         }
         cell.dataBind(itemData[indexPath.item], itemRow: indexPath.item)

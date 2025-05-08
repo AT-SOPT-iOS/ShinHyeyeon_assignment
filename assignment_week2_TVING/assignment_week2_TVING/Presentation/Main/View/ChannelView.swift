@@ -1,5 +1,5 @@
 //
-//  Baseball.swift
+//  ChannelView.swift
 //  assignment_week2_TVING
 //
 //  Created by 신혜연 on 5/3/25.
@@ -8,20 +8,20 @@
 import UIKit
 import SnapKit
 
-class Baseball: UIView {
+class ChannelView: UIView, UICollectionViewDelegate {
     
     // MARK: - Properties
-    private let itemData = BaseballContent.dummy()
-    
+    private var itemData = ChannelContent.dummy()
+
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 80, height: 50)
+        layout.minimumLineSpacing = 7
+        layout.itemSize = CGSize(width: 90, height: 45)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .black
-        collectionView.register(BaseballCell.self, forCellWithReuseIdentifier: BaseballCell.identifier)
         return collectionView
     }()
     
@@ -29,9 +29,9 @@ class Baseball: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .black
-        
+        setUI()
         setLayout()
+        setCollectionView()
         setDelegate()
     }
     
@@ -40,37 +40,47 @@ class Baseball: UIView {
     }
     
     // MARK: - UI Setting
-    private func setLayout() {
+    private func setUI() {
         addSubview(collectionView)
-        
+    }
+    
+    private func setLayout() {
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(50)
         }
     }
-                   
+    
+    private func setCollectionView() {
+        collectionView.register(ChannelCell.self, forCellWithReuseIdentifier: ChannelCell.identifier)
+    }
     
 // MARK: - Delegate
     private func setDelegate() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
-    private func setCollectionView() {
-        collectionView.register(BaseballCell.self, forCellWithReuseIdentifier: BaseballCell.identifier)
-    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension Baseball: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension ChannelView: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return itemData.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BaseballCell.identifier, for: indexPath) as? BaseballCell else {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ChannelCell.identifier,
+            for: indexPath
+        ) as? ChannelCell else {
             return UICollectionViewCell()
         }
         cell.dataBind(itemData[indexPath.item], itemRow: indexPath.item)

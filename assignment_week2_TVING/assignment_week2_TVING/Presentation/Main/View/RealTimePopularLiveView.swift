@@ -1,5 +1,5 @@
 //
-//  RealTimePopularMovie.swift
+//  RealTimePopularLiveView.swift
 //  assignment_week2_TVING
 //
 //  Created by 신혜연 on 5/3/25.
@@ -8,14 +8,14 @@
 import UIKit
 import SnapKit
 
-class RealTimePopularMovie: UIView {
+class RealTimePopularLiveView: UIView {
     
     // MARK: - Properties
-    private let itemData = RealTimePopularMovieContent.dummy()
+    private let itemData = RealTimePopularLiveContent.dummy()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "실시간 인기 영화"
+        label.text = "실시간 인기 LIVE"
         label.textColor = .white
         label.font = UIFont(name: "Pretendard-Bold", size: 15)
         return label
@@ -32,7 +32,7 @@ class RealTimePopularMovie: UIView {
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 98, height: 146)
+        layout.itemSize = CGSize(width: 160, height: 140)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
@@ -43,6 +43,8 @@ class RealTimePopularMovie: UIView {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        self.backgroundColor = .black
         
         setUI()
         setLayout()
@@ -62,6 +64,7 @@ class RealTimePopularMovie: UIView {
             collectionView
         )
     }
+    
     private func setLayout() {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -73,14 +76,14 @@ class RealTimePopularMovie: UIView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(13)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(9)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(150)
+            $0.height.equalTo(140)
         }
     }
     
     private func setCollectionView() {
-        collectionView.register(RealTimePopularMovieCell.self, forCellWithReuseIdentifier: RealTimePopularMovieCell.identifier)
+        collectionView.register(RealTimePopularLiveCell.self, forCellWithReuseIdentifier: RealTimePopularLiveCell.identifier)
     }
     
     // MARK: - Delegate
@@ -91,14 +94,14 @@ class RealTimePopularMovie: UIView {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension RealTimePopularMovie: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RealTimePopularLiveView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RealTimePopularMovieCell.identifier, for: indexPath) as? RealTimePopularMovieCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RealTimePopularLiveCell.identifier, for: indexPath) as? RealTimePopularLiveCell else {
             return UICollectionViewCell()
         }
         cell.dataBind(itemData[indexPath.item], itemRow: indexPath.item)

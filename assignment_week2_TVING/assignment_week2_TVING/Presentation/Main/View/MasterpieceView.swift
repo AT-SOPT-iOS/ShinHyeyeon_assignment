@@ -1,5 +1,5 @@
 //
-//  Masterpiece.swift
+//  MasterpieceView.swift
 //  assignment_week2_TVING
 //
 //  Created by 신혜연 on 5/3/25.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class Masterpiece: UIView {
+class MasterpieceView: UIView {
     
     // MARK: - Properties
     private let itemData = MasterpieceContent.dummy()
@@ -80,7 +80,7 @@ class Masterpiece: UIView {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension Masterpiece: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MasterpieceView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemData.count
