@@ -117,7 +117,7 @@ class HomeViewController: UIViewController {
     private func setLayout() {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.left.right.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         contentView.snp.makeConstraints {
