@@ -62,7 +62,7 @@ class BaseballView: UIView {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 extension BaseballView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

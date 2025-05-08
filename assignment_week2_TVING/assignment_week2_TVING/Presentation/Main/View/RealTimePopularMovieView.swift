@@ -90,7 +90,7 @@ class RealTimePopularMovieView: UIView {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 extension RealTimePopularMovieView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

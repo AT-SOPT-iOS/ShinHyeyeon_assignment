@@ -64,7 +64,7 @@ class ChannelView: UIView, UICollectionViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 extension ChannelView: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
