@@ -12,7 +12,7 @@ class GetInfoService {
     static let shared = GetInfoService()
     private init() {}
     
-    private let apiKey = "8ff4d1326a0742ccd763469ba159f7d8"
+    private let apiKey = Bundle.main.infoDictionary?["API_KEY"] as! String
     
     func makeRequest(targetDate: String) -> URLRequest? {
            var urlString = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"

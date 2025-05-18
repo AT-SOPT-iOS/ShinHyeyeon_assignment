@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  assignment_week2_TVING
+//
+//  Created by 신혜연 on 5/18/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_KEY = 8ff4d1326a0742ccd763469ba159f7d8
