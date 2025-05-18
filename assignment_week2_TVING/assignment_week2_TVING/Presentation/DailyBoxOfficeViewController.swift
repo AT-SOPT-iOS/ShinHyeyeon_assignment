@@ -38,7 +38,7 @@ class DailyBoxOfficeViewController: UIViewController {
     private func fetchData() {
         Task {
             do {
-                let result = try await GetInfoService.shared.fetchDailyBoxOfficeList(targetDate: "20250512")
+                let result = try await GetInfoService.shared.fetchDailyBoxOfficeList(targetDate: "20250517")
                 self.boxOfficeList = result
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -47,6 +47,11 @@ class DailyBoxOfficeViewController: UIViewController {
                 print("데이터 불러오기 실패: \(error)")
             }
         }
+    }
+    
+    private func configureCell(_ cell: UITableViewCell, with movie: DailyBoxOffice) {
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.text = "\(movie.rank)위: \(movie.movieNm)\n관객 수: \(movie.audiCnt)명"
     }
 }
 
@@ -60,8 +65,7 @@ extension DailyBoxOfficeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movie = boxOfficeList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "BoxOfficeCell", for: indexPath)
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = "\(movie.rank)위: \(movie.movieNm)\n관객 수: \(movie.audiCnt)명"
+        configureCell(cell, with: movie)
         return cell
     }
 }
