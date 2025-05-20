@@ -132,6 +132,10 @@ iOSInjectionProject/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+### Env
+*.xcconfig
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,xcode,swift
 *.xcuserstate
 assignment_week2_TVING/assignment_week2_TVING.xcodeproj/project.xcworkspace/xcuserdata/*
