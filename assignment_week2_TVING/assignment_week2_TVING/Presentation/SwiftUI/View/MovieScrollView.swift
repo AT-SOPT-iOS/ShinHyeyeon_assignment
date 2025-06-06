@@ -15,7 +15,7 @@ struct MovieScrollView: View {
         VStack(spacing: 13) {
             HStack(spacing: 0) {
                 Text("실시간 인기 영화")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.system(size: 15))
                     .bold()
                     .padding(.leading, 13)
@@ -26,7 +26,7 @@ struct MovieScrollView: View {
                     
                 } label: {
                     Text("더보기")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .font(.system(size: 12))
                         .padding(.trailing, 10)
                 }

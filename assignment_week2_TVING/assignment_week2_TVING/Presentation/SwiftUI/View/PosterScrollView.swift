@@ -14,7 +14,7 @@ struct PosterScrollView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 9) {
             Text("오늘의 티빙 TOP 20")
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .font(.system(size: 15))
                 .bold()
                 .padding(.leading, 12)
@@ -24,7 +24,7 @@ struct PosterScrollView: View {
                     ForEach(Array(posters.enumerated()), id: \.element) { index, poster in
                         HStack(alignment: .bottom) {
                             Text("\(index + 1)")
-                                .foregroundColor(.white)
+                                .foregroundStyle(.white)
                                 .font(.system(size: 50, weight: .bold))
                                 .rotationEffect(.degrees(10))
                             

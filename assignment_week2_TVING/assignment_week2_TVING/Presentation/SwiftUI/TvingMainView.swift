@@ -42,11 +42,11 @@ struct TvingMainView: View {
                         }) {
                             VStack(spacing: 7) {
                                 Text(tab)
-                                    .foregroundColor(selectedTab == tab ? .white : .gray)
+                                    .foregroundStyle(selectedTab == tab ? .white : .gray)
                                     .bold()
                                 Rectangle()
                                     .frame(width: 15, height: 3)
-                                    .foregroundColor(selectedTab == tab ? .white : .clear)
+                                    .foregroundStyle(selectedTab == tab ? .white : .clear)
                             }
                         }
                     }
@@ -84,12 +84,12 @@ struct TvingMainView: View {
                         
                         HStack(spacing: 0) {
                             Text("공지")
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                                 .font(.system(size: 11, weight: .medium))
                                 .padding(.leading, 17)
                             
                             Text("티빙 계정 공유 정책 추가 안내")
-                                .foregroundColor(.white)
+                                .foregroundStyle(.white)
                                 .font(.system(size: 11, weight: .medium))
                                 .padding(.leading, 8)
                             
@@ -114,7 +114,7 @@ struct TvingMainView: View {
                         
                         HStack {
                             Text("고객문의 • 이용약관 •\n사업자정보 • 인재채용")
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                                 .font(.system(size: 11, weight: .medium))
                                 .padding(.top, 13)
                                 .padding(.leading, 20)

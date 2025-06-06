@@ -15,7 +15,7 @@ struct Top5ScrollView: View {
         VStack(spacing: 13) {
             HStack(spacing: 0) {
                 Text("실시간 인기 LIVE")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.system(size: 15, weight: .bold))
 
                 Spacer()

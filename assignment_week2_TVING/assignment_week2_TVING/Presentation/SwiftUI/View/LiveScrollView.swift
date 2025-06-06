@@ -22,7 +22,7 @@ struct LiveScrollView: View {
         VStack(spacing: 9) {
             HStack(spacing: 0) {
                 Text("실시간 인기 LIVE")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.system(size: 15))
                     .bold()
                     .padding(.leading, 13)
@@ -33,7 +33,7 @@ struct LiveScrollView: View {
                     
                 } label: {
                     Text("더보기")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                         .font(.system(size: 12))
                         .padding(.trailing, 10)
                 }
@@ -51,19 +51,19 @@ struct LiveScrollView: View {
                             
                             HStack(alignment: .top) {
                                 Text("\(index + 1)")
-                                    .foregroundColor(.white)
+                                    .foregroundStyle(.white)
                                     .font(.system(size: 19, weight: .bold))
                                     .rotationEffect(.degrees(10))
                                 VStack(alignment: .leading, spacing: 2)  {
                                     if let detail = programDetails[program] {
                                         Text(detail.title)
-                                            .foregroundColor(.white)
+                                            .foregroundStyle(.white)
                                             .font(.system(size: 10, weight: .medium))
                                         Text(detail.episode)
-                                            .foregroundColor(.gray)
+                                            .foregroundStyle(.gray)
                                             .font(.system(size: 10, weight: .regular))
                                         Text(detail.rating)
-                                            .foregroundColor(.gray)
+                                            .foregroundStyle(.gray)
                                             .font(.system(size: 10, weight: .regular))
                                     }
                                 }
