@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -19,12 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        let rootView = TvingMainView()
+        
         let window = UIWindow(windowScene: windowScene)
-        let loginVC = DailyBoxOfficeViewController()
-        let navigationController = UINavigationController(rootViewController: loginVC)
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        window.rootViewController = UIHostingController(rootView: rootView)
         self.window = window
+        window.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
