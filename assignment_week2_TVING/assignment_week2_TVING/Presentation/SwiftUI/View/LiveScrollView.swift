@@ -42,7 +42,8 @@ struct LiveScrollView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 7) {
-                    ForEach (Array(programs.enumerated()), id: \.element) { index, program in
+                    ForEach(programs.indices, id: \.self) { index in
+                        let program = programs[index]
                         VStack(alignment: .leading) {
                             Image("\(program)")
                                 .resizable()
